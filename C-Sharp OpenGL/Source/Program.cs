@@ -22,8 +22,12 @@ namespace C_Sharp_OpenGL
 {
     class Program
     {
-        static void Main(string[] args)
+        void run()
         {
+            Log.restart_GL_Log();
+            Log.GL_Log("Starting GLFW" + Environment.NewLine + Glfw.GetVersionString() + Environment.NewLine);
+            Glfw.SetErrorCallback(Log.glfw_error_callback);
+
             if (!Glfw.Init()){
                 Console.WriteLine("ERROR: Could not start GLFW3");
                 Console.WriteLine("Press Any Key to Continue...");
@@ -31,16 +35,13 @@ namespace C_Sharp_OpenGL
                 Environment.Exit(-1);
             }
 
-            GlfwWindowPtr window = Glfw.CreateWindow(640, 480, "Hello Triangle", GlfwMonitorPtr.Null, GlfwWindowPtr.Null);
+            Window.initWindowHints();
+            GlfwWindowPtr window = Window.initWindow("Extended Hello Triangle");
 
-            Glfw.MakeContextCurrent(window);
+            Log.log_gl_params();
 
-            //Get Version Info
-            String renderer = GL.GetString(StringName.Renderer);
-            String version = GL.GetString(StringName.Version);
-
-            Console.WriteLine("Renderer: " + renderer);
-            Console.WriteLine("Version: " + version);
+            Glfw.SetWindowSizeCallback(window, Window.glfw_window_size_callback);
+            Glfw.SetFramebufferSizeCallback(window, Window.glfw_framebuffer_resize_callback);
 
             //Tell GL to only draw onto a pixel if the shape is closer to the viewer
             GL.Enable(EnableCap.DepthTest); //Enable Depth Testing
@@ -67,11 +68,11 @@ namespace C_Sharp_OpenGL
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
 
             GLuint vs = GL.CreateShader(ShaderType.VertexShader);
-            String vertexShader = File.ReadAllText("test.vert");
+            string vertexShader = File.ReadAllText("test.vert");
             GL.ShaderSource(vs, vertexShader);
             GL.CompileShader(vs);
             GLuint fs = GL.CreateShader(ShaderType.FragmentShader);
-            String fragmentShader = File.ReadAllText("test.frag");
+            string fragmentShader = File.ReadAllText("test.frag");
             GL.ShaderSource(fs, fragmentShader);
             GL.CompileShader(fs);
 
@@ -82,7 +83,10 @@ namespace C_Sharp_OpenGL
 
             while (!Glfw.WindowShouldClose(window)){
                 //Wipe the drawing surface clear
+                Window.updateFPSCounter(window);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+                GL.Viewport(0, 0, Window.g_fb_width, Window.g_fb_height);
+
                 GL.UseProgram(shader_program);
                 GL.BindVertexArray(vao);
 
@@ -94,9 +98,20 @@ namespace C_Sharp_OpenGL
 
                 //Put the stuff we've been drawing onto the display
                 Glfw.SwapBuffers(window);
+
+                if(Glfw.GetKey(window, Key.Escape))
+                {
+                    Glfw.SetWindowShouldClose(window, true);
+                }
             }
 
             Glfw.Terminate();
+        }
+
+        static void Main(string[] args)
+        {
+            var Program = new Program();
+            Program.run();
         }
     }
 }
