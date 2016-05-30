@@ -1,0 +1,7 @@
+c:\users\rbrnx\documents\visual studio 2015\Projects\C-Sharp OpenGL\C-Sharp OpenGL\bin\Debug\C-Sharp OpenGL.exe.config
+c:\users\rbrnx\documents\visual studio 2015\Projects\C-Sharp OpenGL\C-Sharp OpenGL\bin\Debug\C-Sharp OpenGL.exe
+c:\users\rbrnx\documents\visual studio 2015\Projects\C-Sharp OpenGL\C-Sharp OpenGL\bin\Debug\C-Sharp OpenGL.pdb
+c:\users\rbrnx\documents\visual studio 2015\Projects\C-Sharp OpenGL\C-Sharp OpenGL\bin\Debug\Pencil.Gaming.dll
+c:\users\rbrnx\documents\visual studio 2015\Projects\C-Sharp OpenGL\C-Sharp OpenGL\obj\Debug\Hello Triangle.csprojResolveAssemblyReference.cache
+c:\users\rbrnx\documents\visual studio 2015\Projects\C-Sharp OpenGL\C-Sharp OpenGL\obj\Debug\C-Sharp OpenGL.exe
+c:\users\rbrnx\documents\visual studio 2015\Projects\C-Sharp OpenGL\C-Sharp OpenGL\obj\Debug\C-Sharp OpenGL.pdb
