@@ -22,6 +22,36 @@ namespace C_Sharp_OpenGL
 {
     class Program
     {
+        static double prevSecs;
+
+        public static void load_Shaders(ref GLuint program)
+        {
+            double currentSecs = Glfw.GetTime();
+            double elapsedSecs = currentSecs - prevSecs;
+
+            if (elapsedSecs > 1.5 || program == 0)
+            {
+                prevSecs = currentSecs;
+
+                GLuint vs = GL.CreateShader(ShaderType.VertexShader);
+                string vertexShader = File.ReadAllText("test.vert");
+                GL.ShaderSource(vs, vertexShader);
+                GL.CompileShader(vs);
+                Log.GL_Check_Compile((GLint)vs);
+                GLuint fs = GL.CreateShader(ShaderType.FragmentShader);
+                string fragmentShader = File.ReadAllText("test.frag");
+                GL.ShaderSource(fs, fragmentShader);
+                GL.CompileShader(fs);
+                Log.GL_Check_Compile((GLint)fs);
+
+                program = GL.CreateProgram();
+                GL.AttachShader(program, vs);
+                GL.AttachShader(program, fs);
+                GL.LinkProgram(program);
+                Log.GL_Log("Reload Shaders", true);
+            }    
+        }
+
         void run()
         {
             Log.restart_GL_Log();
@@ -67,19 +97,10 @@ namespace C_Sharp_OpenGL
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
 
-            GLuint vs = GL.CreateShader(ShaderType.VertexShader);
-            string vertexShader = File.ReadAllText("test.vert");
-            GL.ShaderSource(vs, vertexShader);
-            GL.CompileShader(vs);
-            GLuint fs = GL.CreateShader(ShaderType.FragmentShader);
-            string fragmentShader = File.ReadAllText("test.frag");
-            GL.ShaderSource(fs, fragmentShader);
-            GL.CompileShader(fs);
+            GLuint shader_program = 0;
+            load_Shaders(ref shader_program);
 
-            GLuint shader_program = GL.CreateProgram();
-            GL.AttachShader(shader_program, vs);
-            GL.AttachShader(shader_program, fs);
-            GL.LinkProgram(shader_program);
+            Log.print_all((GLint)shader_program);
 
             while (!Glfw.WindowShouldClose(window)){
                 //Wipe the drawing surface clear
@@ -103,6 +124,8 @@ namespace C_Sharp_OpenGL
                 {
                     Glfw.SetWindowShouldClose(window, true);
                 }
+
+                load_Shaders(ref shader_program);
             }
 
             Glfw.Terminate();

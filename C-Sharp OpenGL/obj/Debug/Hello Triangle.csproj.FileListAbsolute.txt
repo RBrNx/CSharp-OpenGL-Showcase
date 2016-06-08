@@ -5,3 +5,10 @@ c:\users\rbrnx\documents\visual studio 2015\Projects\C-Sharp OpenGL\C-Sharp Open
 c:\users\rbrnx\documents\visual studio 2015\Projects\C-Sharp OpenGL\C-Sharp OpenGL\obj\Debug\Hello Triangle.csprojResolveAssemblyReference.cache
 c:\users\rbrnx\documents\visual studio 2015\Projects\C-Sharp OpenGL\C-Sharp OpenGL\obj\Debug\C-Sharp OpenGL.exe
 c:\users\rbrnx\documents\visual studio 2015\Projects\C-Sharp OpenGL\C-Sharp OpenGL\obj\Debug\C-Sharp OpenGL.pdb
+C:\Users\RBrNx\Documents\Visual Studio 2015\Projects\CSharp-OpenGL-Showcase\C-Sharp OpenGL\bin\Debug\C-Sharp OpenGL.exe.config
+C:\Users\RBrNx\Documents\Visual Studio 2015\Projects\CSharp-OpenGL-Showcase\C-Sharp OpenGL\obj\Debug\C-Sharp OpenGL.exe
+C:\Users\RBrNx\Documents\Visual Studio 2015\Projects\CSharp-OpenGL-Showcase\C-Sharp OpenGL\obj\Debug\C-Sharp OpenGL.pdb
+C:\Users\RBrNx\Documents\Visual Studio 2015\Projects\CSharp-OpenGL-Showcase\C-Sharp OpenGL\bin\Debug\C-Sharp OpenGL.exe
+C:\Users\RBrNx\Documents\Visual Studio 2015\Projects\CSharp-OpenGL-Showcase\C-Sharp OpenGL\bin\Debug\C-Sharp OpenGL.pdb
+C:\Users\RBrNx\Documents\Visual Studio 2015\Projects\CSharp-OpenGL-Showcase\C-Sharp OpenGL\bin\Debug\Pencil.Gaming.dll
+C:\Users\RBrNx\Documents\Visual Studio 2015\Projects\CSharp-OpenGL-Showcase\C-Sharp OpenGL\obj\Debug\Hello Triangle.csprojResolveAssemblyReference.cache

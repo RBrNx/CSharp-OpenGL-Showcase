@@ -1,21 +1,47 @@
-GL_LOG_FILE 2016-36-30 11:36:18
+GL_LOG_FILE 2016-06-08 05:06:57
 Starting GLFW
 3.0.3 Win32 WGL MinGW DLL
 
-Renderer: AMD Radeon HD 6800 Series
-Version: 3.2.13399 Core Profile Forward-Compatible Context 15.201.1151.1008
+Renderer: GeForce GTX 765M/PCIe/SSE2
+Version: 3.2.0 NVIDIA 368.22
 -----------------------------------
 GL Context Params
-GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS: 108
+GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS: 192
 GL_MAX_CUBE_MAP_TEXTURE_SIZE: 16384
 GL_MAX_DRAW_BUFFERS: 1029
-GL_MAX_FRAGMENT_UNIFORM_COMPONENTS: 16384
-GL_MAX_TEXTURE_IMAGE_UNITS: 18
+GL_MAX_FRAGMENT_UNIFORM_COMPONENTS: 4096
+GL_MAX_TEXTURE_IMAGE_UNITS: 32
 GL_MAX_TEXTURE_SIZE: 16384
-GL_MAX_VARYING_FLOATS: 128
-GL_MAX_VERTEX_ATTRIBS: 29
-GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS: 18
-GL_MAX_VERTEX_UNIFORM_COMPONENTS: 16384
+GL_MAX_VARYING_FLOATS: 0
+GL_MAX_VERTEX_ATTRIBS: 16
+GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS: 32
+GL_MAX_VERTEX_UNIFORM_COMPONENTS: 4096
 GL_MAX_VIEWPORT_DIMS: 16384 16384
 GL_STEREO: False
 -----------------------------------
+05:06:58    Reload Shaders
+--------------------
+Shader Program 3 info:
+05:06:58    GL_LINK_STATUS = 1
+05:06:58    GL_ATTACHED_SHADERS = 2
+05:06:58    GL_ACTIVE_ATTRIBUTES = 1
+05:06:58    0) Type: vec3   Name: vp   Location: 0
+05:06:58    GL_ACTIVE_UNIFORMS = 0
+05:06:58    Program info log for GL index 3:
+05:06:58    
+05:06:59    Reload Shaders
+05:07:01    Reload Shaders
+05:07:02    Reload Shaders
+05:07:04    Reload Shaders
+05:07:05    Reload Shaders
+05:07:07    Reload Shaders
+05:07:08    Reload Shaders
+05:07:10    Reload Shaders
+05:07:11    Reload Shaders
+05:07:13    Reload Shaders
+05:07:14    Reload Shaders
+05:07:16    Reload Shaders
+05:07:17    Reload Shaders
+05:07:19    Reload Shaders
+05:07:20    Reload Shaders
+05:07:22    Reload Shaders
