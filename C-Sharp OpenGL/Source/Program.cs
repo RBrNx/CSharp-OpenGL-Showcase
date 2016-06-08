@@ -2,6 +2,7 @@
 using System.IO;
 using Pencil.Gaming;
 using Pencil.Gaming.Graphics;
+using Pencil.Gaming.MathUtils;
 using System.Collections.Generic;
 
 using GLbitfield = System.UInt32;
@@ -55,7 +56,7 @@ namespace C_Sharp_OpenGL
             {
                 prevSecs = currentSecs;
 
-                Log.GL_Log("Reload Shaders", true);
+                //Log.GL_Log("Reload Shaders", true);
 
                 string vertexShader = File.ReadAllText("test.vert");
                 GL.ShaderSource(vertex_shader, vertexShader);
@@ -113,6 +114,11 @@ namespace C_Sharp_OpenGL
                 0.0f, 0.0f, 1.0f
             };
 
+            Matrix matrix = new Matrix(1.0f, 0.0f, 0.0f, 0.0f,
+                                        0.0f, 1.0f, 0.0f, 0.0f,
+                                        0.0f, 0.0f, 1.0f, 0.0f,
+                                        0.5f, 0.0f, 0.0f, 1.0f);
+
             GLint points_vbo = 0;
             GL.GenBuffers(1, out points_vbo);
             GL.BindBuffer(BufferTarget.ArrayBuffer, points_vbo);
@@ -144,7 +150,27 @@ namespace C_Sharp_OpenGL
             GL.CullFace(CullFaceMode.Back);
             GL.FrontFace(FrontFaceDirection.Cw);
 
+            int matrix_location = GL.GetUniformLocation(shader_program, "matrix");
+            GL.UseProgram(shader_program);
+            GL.UniformMatrix4(matrix_location, false, ref matrix);
+
+            float speed = 1.0f;
+            float last_pos = 0.0f;
+            double prev_secs = 0;
+
             while (!Glfw.WindowShouldClose(window)){
+                double current_secs = Glfw.GetTime();
+                double elapsed_secs = current_secs - prev_secs;
+                prev_secs = current_secs;
+
+                if (Math.Abs(last_pos) > 1.0f)
+                {
+                    speed = -speed;
+                }
+
+                matrix.M41 = (float)elapsed_secs * speed + last_pos;
+                last_pos = matrix.M41;
+
                 //Wipe the drawing surface clear
                 Window.updateFPSCounter(window);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -152,6 +178,8 @@ namespace C_Sharp_OpenGL
 
                 GL.UseProgram(shader_program);
                 GL.BindVertexArray(vao);
+
+                GL.UniformMatrix4(matrix_location, false, ref matrix);
 
                 //draw points 0-3 from the currently bound VAO with current in-use shader
                 GL.DrawArrays(BeginMode.Triangles, 0, 3);
@@ -164,7 +192,7 @@ namespace C_Sharp_OpenGL
 
                 handle_input(window);
 
-                load_Shaders(ref vertex_shader, ref fragment_shader, ref shader_program);
+                //load_Shaders(ref vertex_shader, ref fragment_shader, ref shader_program);
             }
 
             Glfw.Terminate();
