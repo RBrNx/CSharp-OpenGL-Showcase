@@ -2,6 +2,7 @@
 using System.IO;
 using Pencil.Gaming;
 using Pencil.Gaming.Graphics;
+using System.Collections.Generic;
 
 using GLbitfield = System.UInt32;
 using GLboolean = System.Boolean;
@@ -24,31 +25,51 @@ namespace C_Sharp_OpenGL
     {
         static double prevSecs;
 
-        public static void load_Shaders(ref GLuint program)
+        public static void load_Shaders(ref GLuint vertex_shader, ref GLuint frag_shader, ref GLuint program)
         {
             double currentSecs = Glfw.GetTime();
             double elapsedSecs = currentSecs - prevSecs;
 
-            if (elapsedSecs > 1.5 || program == 0)
+            if(program == 0)
+            {
+                Log.GL_Log("Create Shaders", true);
+
+                vertex_shader = GL.CreateShader(ShaderType.VertexShader);
+                string vertexShader = File.ReadAllText("test.vert");
+                GL.ShaderSource(vertex_shader, vertexShader);
+                GL.CompileShader(vertex_shader);
+                Log.GL_Check_Compile((GLint)vertex_shader);
+
+                frag_shader = GL.CreateShader(ShaderType.FragmentShader);
+                string fragmentShader = File.ReadAllText("test.frag");
+                GL.ShaderSource(frag_shader, fragmentShader);
+                GL.CompileShader(frag_shader);
+                Log.GL_Check_Compile((GLint)frag_shader);
+
+                program = GL.CreateProgram();
+                GL.AttachShader(program, vertex_shader);
+                GL.AttachShader(program, frag_shader);
+                GL.LinkProgram(program);
+            }
+            else if (elapsedSecs > 1.5)
             {
                 prevSecs = currentSecs;
 
-                GLuint vs = GL.CreateShader(ShaderType.VertexShader);
-                string vertexShader = File.ReadAllText("test.vert");
-                GL.ShaderSource(vs, vertexShader);
-                GL.CompileShader(vs);
-                Log.GL_Check_Compile((GLint)vs);
-                GLuint fs = GL.CreateShader(ShaderType.FragmentShader);
-                string fragmentShader = File.ReadAllText("test.frag");
-                GL.ShaderSource(fs, fragmentShader);
-                GL.CompileShader(fs);
-                Log.GL_Check_Compile((GLint)fs);
-
-                program = GL.CreateProgram();
-                GL.AttachShader(program, vs);
-                GL.AttachShader(program, fs);
-                GL.LinkProgram(program);
                 Log.GL_Log("Reload Shaders", true);
+
+                string vertexShader = File.ReadAllText("test.vert");
+                GL.ShaderSource(vertex_shader, vertexShader);
+                GL.CompileShader(vertex_shader);
+                Log.GL_Check_Compile((GLint)vertex_shader);
+
+                string fragmentShader = File.ReadAllText("test.frag");
+                GL.ShaderSource(frag_shader, fragmentShader);
+                GL.CompileShader(frag_shader);
+                Log.GL_Check_Compile((GLint)frag_shader);
+
+                GL.AttachShader(program, vertex_shader);
+                GL.AttachShader(program, frag_shader);
+                GL.LinkProgram(program);
             }    
         }
 
@@ -85,22 +106,43 @@ namespace C_Sharp_OpenGL
                 -0.6f, -0.5f, 0.0f
             };
 
-            GLint vbo = 0;
-            GL.GenBuffers(1, out vbo);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+            GLfloat[] colours =
+            {
+                1.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 1.0f
+            };
+
+            GLint points_vbo = 0;
+            GL.GenBuffers(1, out points_vbo);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, points_vbo);
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(points.Length * sizeof(GLfloat)), points, BufferUsageHint.StaticDraw);
+
+            GLint colours_vbo = 0;
+            GL.GenBuffers(1, out colours_vbo);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, colours_vbo);
+            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(colours.Length * sizeof(GLfloat)), colours, BufferUsageHint.StaticDraw);
 
             GLint vao = 0;
             GL.GenVertexArrays(1, out vao);
             GL.BindVertexArray(vao);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, points_vbo);
             GL.EnableVertexAttribArray(0);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, colours_vbo);
+            GL.EnableVertexAttribArray(1);
+            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 0, 0);
 
             GLuint shader_program = 0;
-            load_Shaders(ref shader_program);
+            GLuint vertex_shader = 0;
+            GLuint fragment_shader = 0;
+            load_Shaders(ref vertex_shader, ref fragment_shader, ref shader_program);
 
             Log.print_all((GLint)shader_program);
+
+            GL.Enable(EnableCap.CullFace);
+            GL.CullFace(CullFaceMode.Back);
+            GL.FrontFace(FrontFaceDirection.Cw);
 
             while (!Glfw.WindowShouldClose(window)){
                 //Wipe the drawing surface clear
@@ -120,15 +162,34 @@ namespace C_Sharp_OpenGL
                 //Put the stuff we've been drawing onto the display
                 Glfw.SwapBuffers(window);
 
-                if(Glfw.GetKey(window, Key.Escape))
-                {
-                    Glfw.SetWindowShouldClose(window, true);
-                }
+                handle_input(window);
 
-                load_Shaders(ref shader_program);
+                load_Shaders(ref vertex_shader, ref fragment_shader, ref shader_program);
             }
 
             Glfw.Terminate();
+        }
+
+        public static void handle_input(GlfwWindowPtr window)
+        {
+
+            bool test = Glfw.GetKey(window, Key.Three);
+
+            if (Glfw.GetKey(window, Key.Escape))
+            {
+                Glfw.SetWindowShouldClose(window, true);
+            }
+
+            if(Glfw.GetKey(window, Key.One))
+            {
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);                
+            }
+
+            if (Glfw.GetKey(window, Key.Two))
+            {
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+            }
+
         }
 
         static void Main(string[] args)

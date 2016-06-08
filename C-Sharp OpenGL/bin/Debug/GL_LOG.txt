@@ -1,4 +1,4 @@
-GL_LOG_FILE 2016-06-08 05:06:57
+GL_LOG_FILE 2016-13-08 07:13:55
 Starting GLFW
 3.0.3 Win32 WGL MinGW DLL
 
@@ -19,29 +19,16 @@ GL_MAX_VERTEX_UNIFORM_COMPONENTS: 4096
 GL_MAX_VIEWPORT_DIMS: 16384 16384
 GL_STEREO: False
 -----------------------------------
-05:06:58    Reload Shaders
+07:13:56    Create Shaders
 --------------------
 Shader Program 3 info:
-05:06:58    GL_LINK_STATUS = 1
-05:06:58    GL_ATTACHED_SHADERS = 2
-05:06:58    GL_ACTIVE_ATTRIBUTES = 1
-05:06:58    0) Type: vec3   Name: vp   Location: 0
-05:06:58    GL_ACTIVE_UNIFORMS = 0
-05:06:58    Program info log for GL index 3:
-05:06:58    
-05:06:59    Reload Shaders
-05:07:01    Reload Shaders
-05:07:02    Reload Shaders
-05:07:04    Reload Shaders
-05:07:05    Reload Shaders
-05:07:07    Reload Shaders
-05:07:08    Reload Shaders
-05:07:10    Reload Shaders
-05:07:11    Reload Shaders
-05:07:13    Reload Shaders
-05:07:14    Reload Shaders
-05:07:16    Reload Shaders
-05:07:17    Reload Shaders
-05:07:19    Reload Shaders
-05:07:20    Reload Shaders
-05:07:22    Reload Shaders
+07:13:56    GL_LINK_STATUS = 1
+07:13:56    GL_ATTACHED_SHADERS = 2
+07:13:56    GL_ACTIVE_ATTRIBUTES = 2
+07:13:56    0) Type: vec3   Name: vertex_colour   Location: 1
+07:13:56    1) Type: vec3   Name: vertex_position   Location: 0
+07:13:56    GL_ACTIVE_UNIFORMS = 0
+07:13:56    Program info log for GL index 3:
+07:13:56    
+07:13:57    Reload Shaders
+07:13:58    Reload Shaders
